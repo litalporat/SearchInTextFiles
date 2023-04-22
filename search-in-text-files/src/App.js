@@ -1,23 +1,15 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import Container from "@mui/material/Container";
+import TextField from "@mui/material/TextField";
+import { margin } from "@mui/system";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className="header">Search In The Text Files</div>
+      <Container maxWidth="lg" fixed sx={{ margin: 10 }}>
+        <TextField id="outlined-basic" variant="outlined" />
+      </Container>
     </div>
   );
 }
