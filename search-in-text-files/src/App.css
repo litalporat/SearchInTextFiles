@@ -1,35 +1,33 @@
 .App {
-  background-color: #fff9de;
+  background-color: #fff1dc;
   min-height: 100vh;
   display: flexbox;
 }
 
 .header {
-  background-color: #a6d0dd;
+  background-color: #3a98b9;
   height: 16vh;
   text-align: center;
   padding-top: 5vh;
-  color: white;
+  color: #fff1dc;
   font-size: 7vh;
   font-weight: bolder;
   letter-spacing: 3px;
+  border-bottom-left-radius: 30%;
+  border-bottom-right-radius: 30%;
 }
 
-.container {
-  display: flex;
-  justify-self: center;
+.grid-container {
+  display: grid;
   justify-content: center;
-  align-self: center;
-  align-content: center;
-  padding-top: 20px;
+  padding: 20px;
+  /* background-color: aqua; */
 }
 
 .row {
-  /* background-color: aqua; */
   width: 150vh;
-  color: #ff6969;
+  color: #3a98b9;
   font-weight: bolder;
-  /* background-color: aqua; */
 }
 
 strong {
