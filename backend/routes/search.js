@@ -7,6 +7,12 @@ router.route("/").get((req, res) => {
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
+router.route("/searchesnum").get((req, res) => {
+  Search.find()
+    .then((searches) => res.json(searches.length))
+    .catch((err) => res.status(400).json("Error: " + err));
+});
+
 router.route("/add").post((req, res) => {
   const search = req.body.search;
   const newSearch = new Search({ search });

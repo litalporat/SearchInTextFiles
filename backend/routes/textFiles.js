@@ -2,9 +2,10 @@ const router = require("express").Router();
 let TextFiles = require("../models/textFiles.model");
 const fs = require("fs");
 
-router.route("/reset").post((req, res) => {
+router.route("/reset").get((req, res) => {
+  console.log("reset");
   const categories = [];
-  fs.readdirSync("./textFiles").forEach((textFile) => {
+  fs.readdirSync("./textFiles").forEach(async (textFile) => {
     const fileContent = fs.readFileSync(`./textFiles/${textFile}`, "utf8");
     const keywords = fileContent.split(", ");
     const categoryName = textFile.split(".")[0];
@@ -13,18 +14,21 @@ router.route("/reset").post((req, res) => {
       keywords,
     });
   });
-  console.log(categories);
+  console.log("categories", categories);
 
-  for (const category of categories) {
+  categories.forEach(async (category) => {
     const categoryDoc = new TextFiles({
       fileName: category.fileName,
       keywords: category.keywords,
     });
-    categoryDoc
-      .save()
-      .then(() => console.log("TextFile added!"))
-      .catch((err) => res.status(400).json("Error: " + err));
-  }
+    try {
+      await categoryDoc.save();
+      console.log("TextFile added!");
+    } catch (err) {
+      res.status(400).json("Error: " + err);
+    }
+  });
+
   res.send(categories);
 });
 
@@ -35,37 +39,30 @@ router.route("/").get((req, res) => {
 });
 
 router.route("/:keyword").get((req, res) => {
+  const files = [];
   TextFiles.find()
     .then((textFiles) => {
-      console.log(textFiles);
+      textFiles.forEach((textfile) => {
+        // console.log(textfile);
+        if (textfile.keywords.includes(req.params.keyword)) {
+          files.push(textfile.fileName);
+          console.log(files);
+        }
+      });
+    })
+    .then(() => {
+      res.send(files);
     })
     .catch((err) => res.status(400).json("Error: " + err));
-
-  // let _id = null;
-  // try {
-  //   _id = ObjectId(req.params.id);
-  // } catch (e) {
-  //   return res.status(400).json({ error: "invalid id!" });
-  // }
-  // try {
-  //   const products = await Product.findById(_id);
-
-  // }
 });
 
-router.route("/add").post((req, res) => {
-  const textFile = req.body.textFile;
-  const newTextFile = new TextFiles({ textFile });
-  newTextFile
-    .save()
-    .then(() => res.json("TextFile added!"))
-    .catch((err) => res.status(400).json("Error: " + err));
-});
-
-router.route("/:id").delete((req, res) => {
-  TextFiles.find(ByIdAndDelete(req.params.id))
-    .then(() => res.json("textFile deleted."))
-    .catch((err) => res.status(400).json("Error: " + err));
-});
+// router.route("/add").post((req, res) => {
+//   const textFile = req.body.textFile;
+//   const newTextFile = new TextFiles({ textFile });
+//   newTextFile
+//     .save()
+//     .then(() => res.json("TextFile added!"))
+//     .catch((err) => res.status(400).json("Error: " + err));
+// });
 
 module.exports = router;
