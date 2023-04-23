@@ -1,6 +1,7 @@
 .App {
   background-color: #fff9de;
   min-height: 100vh;
+  display: flexbox;
 }
 
 .header {
@@ -15,9 +16,40 @@
 }
 
 .container {
-  height: 60vh;
-  width: 160vh;
   display: flex;
   justify-self: center;
-  background-color: palevioletred;
+  justify-content: center;
+  align-self: center;
+  align-content: center;
+  padding-top: 20px;
+}
+
+.row {
+  /* background-color: aqua; */
+  width: 150vh;
+  color: #ff6969;
+  font-weight: bolder;
+  /* background-color: aqua; */
+}
+
+strong {
+  align-self: center;
+  padding-right: 20px;
+  font-size: 35px;
+}
+
+.left {
+  float: left;
+  padding-top: 20px;
+}
+
+.right {
+  float: right;
+}
+
+.searchesNum {
+  display: flex;
+  justify-content: center;
+  font-size: 30px;
+  margin-top: -15px;
 }
