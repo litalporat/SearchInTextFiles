@@ -36,6 +36,17 @@ strong {
   font-size: 35px;
 }
 
+.btn {
+  background-color: #3a98b9;
+  border-radius: 40%;
+  color: #fff1dc;
+  border: none;
+  font-weight: bolder;
+  font-size: 25px;
+  padding: 10px 15px;
+  margin-left: 20px;
+}
+
 .left {
   float: left;
   padding-top: 20px;

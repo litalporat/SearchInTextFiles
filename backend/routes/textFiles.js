@@ -3,7 +3,6 @@ let TextFiles = require("../models/textFiles.model");
 const fs = require("fs");
 
 router.route("/reset").get((req, res) => {
-  console.log("reset");
   const categories = [];
   fs.readdirSync("./textFiles").forEach(async (textFile) => {
     const fileContent = fs.readFileSync(`./textFiles/${textFile}`, "utf8");
@@ -14,7 +13,6 @@ router.route("/reset").get((req, res) => {
       keywords,
     });
   });
-  console.log("categories", categories);
 
   categories.forEach(async (category) => {
     const categoryDoc = new TextFiles({
@@ -23,7 +21,6 @@ router.route("/reset").get((req, res) => {
     });
     try {
       await categoryDoc.save();
-      console.log("TextFile added!");
     } catch (err) {
       res.status(400).json("Error: " + err);
     }
@@ -43,10 +40,8 @@ router.route("/:keyword").get((req, res) => {
   TextFiles.find()
     .then((textFiles) => {
       textFiles.forEach((textfile) => {
-        // console.log(textfile);
         if (textfile.keywords.includes(req.params.keyword)) {
           files.push(textfile.fileName);
-          console.log(files);
         }
       });
     })
