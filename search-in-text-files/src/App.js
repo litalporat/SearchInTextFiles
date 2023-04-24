@@ -27,15 +27,12 @@ function App() {
   }, []);
 
   const handleSearch = () => {
-    const newSearch = document.getElementById("searchField").value.trim();
-    const newFixedSearch =
-      newSearch.charAt(0).toUpperCase() + newSearch.slice(1);
-    axios
-      .get(`http://localhost:5001/textFiles/${newFixedSearch}`)
-      .then((tf) => {
-        setCurrentSearch(tf.data);
-      });
-    axios.get(`http://localhost:5001/search/${newFixedSearch}`).then((resp) => {
+    const newSearch = document.getElementById("searchField").value;
+    axios.get(`http://localhost:5001/textFiles/${newSearch}`).then((tf) => {
+      console.log(tf.data);
+      setCurrentSearch(tf.data);
+    });
+    axios.get(`http://localhost:5001/search/${newSearch}`).then((resp) => {
       console.log(resp.data);
     });
   };
@@ -54,13 +51,13 @@ function App() {
           </span>
           <span className="right">
             <p>Number of searches:</p>
-            <p className="searchesNum">{searchesNum}</p>
+            <p className="searches-num">{searchesNum}</p>
           </span>
         </div>
         <Card variant="outlined" sx={{ textAlign: "center", height: 300 }}>
-          <p>Text Files Found:</p>
+          <p className="small-header">Text Files Found:</p>
           <Divider />
-          {currentSearch && <p>{currentSearch}</p>}
+          {currentSearch && currentSearch.map((file) => <p>{file}</p>)}
         </Card>
       </div>
     </div>

@@ -39,11 +39,13 @@ router.route("/:keyword").get((req, res) => {
   const files = [];
   TextFiles.find()
     .then((textFiles) => {
-      textFiles.forEach((textfile) => {
-        if (textfile.keywords.includes(req.params.keyword)) {
-          files.push(textfile.fileName);
-        }
-      });
+      for (const textfile of textFiles) {
+        textfile.keywords.forEach((key) => {
+          if (key.toLowerCase() == req.params.keyword.toLowerCase()) {
+            files.push(textfile.fileName);
+          }
+        });
+      }
     })
     .then(() => {
       res.send(files);
