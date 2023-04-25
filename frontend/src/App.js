@@ -1,7 +1,4 @@
 import "./App.css";
-import TextField from "@mui/material/TextField";
-import Card from "@mui/material/Card";
-import Divider from "@mui/material/Divider";
 import { useEffect, useState } from "react";
 import { io } from "socket.io-client";
 import { httpService } from "./http-service";
@@ -36,11 +33,13 @@ function App() {
         <div className="row">
           <span className="left">
             <strong>Search: </strong>
-            <TextField
-              variant="filled"
+            <input
+              type="text"
+              placeholder="Search..."
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value)}
-            />
+            ></input>
+
             <button className="btn" onClick={handleSearch}>
               Go!
             </button>
@@ -50,13 +49,13 @@ function App() {
             <p className="count">{countSearch}</p>
           </span>
         </div>
-        <Card variant="outlined" sx={{ textAlign: "center", height: 300 }}>
+        <div className="card">
           <p className="smallHeader">Text Files Found:</p>
-          <Divider />
+          <hr></hr>
           {searchResults.map((file) => (
             <p key={file}>{file}</p>
           ))}
-        </Card>
+        </div>
       </div>
     </div>
   );
