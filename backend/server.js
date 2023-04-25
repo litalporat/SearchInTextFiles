@@ -1,27 +1,31 @@
+require("dotenv").config();
 const express = require("express");
+
+const http = require("http");
+const { Server } = require("socket.io");
 const cors = require("cors");
 const mongoose = require("mongoose");
-require("dotenv").config();
+const searchRouter = require("./routes/search");
 
 const app = express();
-const port = process.env.PORT || 5001;
 
 const uri = process.env.ATLAS_URI;
-mongoose.connect(uri);
-const connection = mongoose.connection;
-connection.once("open", () => {
+mongoose.connection.once("open", () => {
   console.log("MongoDB database connection established successfully");
 });
+mongoose.connect(uri);
 
 app.use(cors());
 app.use(express.json());
 
-const searchRouter = require("./routes/search");
-const textFilesRouter = require("./routes/textFiles");
-
 app.use("/search", searchRouter);
-app.use("/textFiles", textFilesRouter);
 
-app.listen(port, () => {
+const server = http.createServer(app);
+const ioServer = new Server(server, {
+  cors: { origin: "http://localhost:3000" },
+});
+app.set("io", ioServer);
+const port = process.env.PORT || 5001;
+server.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });

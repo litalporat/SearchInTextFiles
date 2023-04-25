@@ -1,32 +1,15 @@
 const router = require("express").Router();
-let Search = require("../models/search.model");
+const {
+  getAllSearches,
+  getSearchesCount,
+  addSearch,
+  searchInTextFile,
+} = require("../controller/search");
 
-const io = require("socket.io")(5002, {
-  cors: {
-    origin: "*",
-  },
-});
+router.get("/", getAllSearches);
 
-router.route("/").get((req, res) => {
-  Search.find()
-    .then((searches) => res.json(searches))
-    .catch((err) => res.status(400).json("Error: " + err));
-});
+router.get("/count", getSearchesCount);
 
-router.route("/searchesnum").get((req, res) => {
-  Search.find()
-    .then((searches) => res.json(searches.length))
-    .catch((err) => res.status(400).json("Error: " + err));
-});
-
-router.route("/:search").get((req, res) => {
-  io.sockets.emit("search", "everyone");
-  const search = req.params.search;
-  const newSearch = new Search({ search });
-  newSearch
-    .save()
-    .then(() => res.json("Search added!"))
-    .catch((err) => res.status(400).json("Error: " + err));
-});
+router.get("/:search", addSearch, searchInTextFile);
 
 module.exports = router;

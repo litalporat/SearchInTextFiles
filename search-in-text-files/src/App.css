@@ -1,4 +1,4 @@
-.App {
+.app {
   background-color: #fff1dc;
   min-height: 100vh;
   display: flexbox;
@@ -17,7 +17,7 @@
   border-bottom-right-radius: 30%;
 }
 
-.grid-container {
+.gridContainer {
   display: grid;
   justify-content: center;
   padding: 20px;
@@ -57,14 +57,14 @@ strong {
   float: right;
 }
 
-.searches-num {
+.count {
   display: flex;
   justify-content: center;
   font-size: 30px;
   margin-top: -15px;
 }
 
-.small-header {
+.smallHeader {
   color: #3a98b9;
   font-size: 30px;
   /* background-color: aqua; */
